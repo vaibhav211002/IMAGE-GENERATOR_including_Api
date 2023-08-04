@@ -6,7 +6,7 @@ const searchBox=document.getElementById("search-box");
 const searchResult=document.getElementById("search-result");
 const showMoreBtn=document.getElementById("show-more-btn");
 
-console.log("vaibhav");
+
 
 
 let keyword="";
@@ -17,10 +17,14 @@ async function searchImages(){
 
 
     keyword=searchBox.value;
-    const url =`https://api.unsplash.com/search/photos?page=${page}&query=${keyword}&client_id=${accessKey}`;
+    const url =`https://api.unsplash.com/search/photos?page=${page}&query=${keyword}&client_id=${accessKey}&per_page=12`;
     
     const response= await fetch(url);
     const data=await response.json();
+
+    if(page==1){
+        searchResult.innerHTML="";
+    }
 
     // console.log(data);
 
@@ -37,6 +41,8 @@ async function searchImages(){
 
     })
 
+    showMoreBtn.style.display="block";
+
 }
 
 searchForm.addEventListener("submit",(e)=>{
@@ -46,9 +52,11 @@ searchForm.addEventListener("submit",(e)=>{
 })
 
 
+showMoreBtn.addEventListener("click",()=>{
+    page++;
+    searchImages();
+})
 
 
 
 
-
-;
